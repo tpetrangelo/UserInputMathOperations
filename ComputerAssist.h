@@ -19,16 +19,21 @@ public:
 	int getDifficulty();
 	//returns current instruction type
 	int getInstructionType();
+	//uses type and difficulty to ask a question to the user
+	int askQuestion(int type, int difficulty);
 	//returns variation of output to user
-	std::string getResponse(bool answerParam);
+	void getResponse(bool answerParam);
 	//sets benchmark to check if user answered 75% or more questions correctly
-	void setBenchmark(int correctParam);
+	void getBenchmark(int correctParam);
 
 
 private:
 	int difficulty{ 1 };
 	int type{ 1 };
-	bool answer{ true };
-	int correct{ 0 };
+	int answer{ 0 };
+	int correctAnswer{ 10 };
+	bool isCorrect{ true };
+	int numCorrect{ 0 };
+	int responseNum{ 1 };
 };
 
