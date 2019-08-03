@@ -5,94 +5,86 @@ Homework #4 - Computer Assisted Instructed
 Pages 281-2
 */
 #include "ComputerAssist.h"
-#include <random>
-#include <cmath>
-
+#include <ctime>
+ 
+//default constructor for ComputerAssist object
 ComputerAssist::ComputerAssist()
 {
 }
 
+//sets difficulty of question
 void ComputerAssist::setDifficulty(int difficultySet)
 {
 	difficulty = difficultySet;
 }
 
+//sets instruction type of question
 void ComputerAssist::setInstructionType(int typeSet)
 {
 	type = typeSet;
 }
 
+//returns question difficulty
 int ComputerAssist::getDifficulty()
 {
 	return difficulty;
 }
 
+//returns question type
 int ComputerAssist::getInstructionType()
 {
 	return type;
 }
 
+/*
+Asks the user a set of 10 math questions, "type" will determine operator for math question
+if "5" is input, question operator will be asked at random. askQuestion uses srand() and 
+rand, along with pow to create random numbers contained in a range set by the user input
+variable "difficulty". Once the 10 questions are completed, getBenchmark is called that
+checks to see if the user got greater than 75% correct (8 or more). An output will be sent
+to the user based on this result
+*/
 int ComputerAssist::askQuestion(int type, int difficulty)
 {
 	for (int i = 0; i < 10; i++) {
-		int randomNumber1{ (int)pow(10,difficulty - 1) + rand() % (int)pow(10,difficulty) };
-		int randomNumber2{ (int)pow(10,difficulty - 1) + rand() % (int)pow(10,difficulty) };
-		switch (type) {
-			//Addition
-		case 1:
-			std::cout << "How much is " << randomNumber1 << " + " << randomNumber2 << "?" << std::endl;
-			correctAnswer = randomNumber1 + randomNumber2;
-			std::cout << "Answer: ";
-			std::cin >> answer;
-			if (answer != correctAnswer) {
-				getResponse(isCorrect);
-				while (answer != correctAnswer) {
-					isCorrect = false;
-					
-					std::cout << "How much is " << randomNumber1 << " + " << randomNumber2 << "?" << std::endl << "New answer : ";
-					correctAnswer = randomNumber1 + randomNumber2;
-					std::cout << correctAnswer << std::endl;
-					std::cin >> answer;
-					if (answer == correctAnswer) {
-						isCorrect = true;
-					}
-					getResponse(isCorrect);
-					correctAnswer = 0;
-				}
-				correctAnswer--;
-			}
-			else
-			{
-				getResponse(isCorrect);
-				std::cout<< std::endl;
-			}
-			correctAnswer = 0;
-			break;
-			//Subtraction
-		case 2:
-			break;
-			//Multiplication
-		case 3:
-			break;
-			//Division
-		case 4:
-			break;
-			//All four
-		case 5:
-			break;
-		default:
-			std::cout << "Invalid choice" << std::endl;
+		srand(time(NULL));
+		//creates two random numbers bounded by difficutly ex: difficulty of 2 bounds possible numbers from 10 to 99
+		int randomNumber1{ rand() % (int)pow(10,difficulty) + (int)pow(10,difficulty - 1) };
+		int randomNumber2{ rand() % (int)pow(10,difficulty) + (int)pow(10,difficulty - 1) };
+		//creates a random operator in the case that the user inputs 5 for type "combination of all four operators"
+		int randOperator = (rand() % 4 + 1);
+		
+		//validation of integer inputs for type, bounds valid inputs from 1 to 5
+		if (type < 1 || type > 5) {
+			std::cout << "Invalid choice, please re-enter a type: ";
 			std::cin >> type;
 			askQuestion(type, difficulty);
 		}
+
+		//sends randomNumber1,2 and type to questionInput where math question will be asked
+		questionInput(randomNumber1, randomNumber2,type);
+		
+		//if type equals five, randOperator will take place of type to vary the operator that will be asked in next question
+		if (type == 5) {
+			questionInput(randomNumber1, randomNumber2, randOperator);
+		}
+
+
 	}
-	getBenchmark(correctAnswer);
-	return 0;
+		//passes numCorrect to getBenchmark to check if user got eight or more questions correctly.
+		getBenchmark(numCorrect);
+		
+		return 0;
 }
 
+//getResponse outputs various repsponses to user based on if their answer was correct or not
 void ComputerAssist::getResponse(bool isCorrectParam)
 {
+	//randomized integer that will output a random response to user
+	srand(time(NULL));
 	responseNum = { 1 + rand() % 4 };
+	
+	//outputs for incorrect answers based on responseNum, a random integer between one and four
 	if (isCorrectParam == true) {
 
 		switch (responseNum)
@@ -114,6 +106,7 @@ void ComputerAssist::getResponse(bool isCorrectParam)
 			break;
 		}
 	}
+	//outputs for incorrect answers based on responseNum, a random integer between one and four
 	else {
 
 		switch (responseNum)
@@ -138,7 +131,7 @@ void ComputerAssist::getResponse(bool isCorrectParam)
 }
 	
 
-
+//checks to see if user got eight or more questions correctly. Outputs correct response to user if they passed or not
 void ComputerAssist::getBenchmark(int correctParam)
 {
 	if (correctParam > 7) {
@@ -146,5 +139,193 @@ void ComputerAssist::getBenchmark(int correctParam)
 	}
 	else {
 		std::cout << "Please ask your teacher for extra help" << std::endl;
+	}
+}
+
+//uses switch statement to ask user question and recieve input, either + - * / or all four. Gets passed in two random integers and question operator type
+void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
+{
+	//switch statment based on op (operator)
+	switch (op)
+	{
+	//case 1: addition
+	case 1:
+
+		//asks user an addition question
+		std::cout << "How much is " << randomInt1 << " + " << randomInt2 << "?" << std::endl;
+		
+		//correct answer is calculated for user comparison
+		correctAnswer = randomInt1 + randomInt2;
+
+		//looks for user input
+		std::cout << "Answer: ";
+		std::cin >> answer;
+
+		//conditional if statement to check if user input is the correct answer
+		if (answer != correctAnswer) {
+			//while the user continues to input wrong answer, loop through
+			while (answer != correctAnswer) {
+				//set isCorrect to false in order to get an incorrect response from getResponse
+				isCorrect = false;
+				getResponse(isCorrect);
+				//re-asks user same question they got wrong orignally
+				std::cout << "How much is " << randomInt1 << " + " << randomInt2 << "?" << std::endl << "New answer : ";
+				std::cin >> answer;
+				//if user inputs correct answer, set isCorrect to true and get new output response reflecting a correct answer
+				if (answer == correctAnswer) {
+					isCorrect = true;
+					getResponse(isCorrect);
+				}
+
+			}
+			//set correctAnswer to 0 in order to allow a new question without correctAnswer holding a previous value
+			correctAnswer = 0;
+			//since user got the answer wrong at one point in current question, decrement numCorrect (defaulted at 10) in order to keep track of user passing or not 
+			numCorrect--;
+		}
+		//if user gets answer right on first try, output a correct response and out an end line
+		else
+		{
+			getResponse(isCorrect);
+			std::cout << std::endl;
+		}
+		//set correct answer back to 0
+		correctAnswer = 0;
+		break;
+
+		//case 2: subtraction
+	case 2:
+
+		//asks user an subtraction question
+		std::cout << "How much is " << randomInt1 << " - " << randomInt2 << "?" << std::endl;
+
+		//correct answer is calculated for user comparison
+		correctAnswer = randomInt1 - randomInt2;
+
+		//looks for user input
+		std::cout << "Answer: ";
+		std::cin >> answer;
+
+		//conditional if statement to check if user input is the correct answer
+		if (answer != correctAnswer) {
+			//while the user continues to input wrong answer, loop through
+			while (answer != correctAnswer) {
+				//set isCorrect to false in order to get an incorrect response from getResponse
+				isCorrect = false;
+				getResponse(isCorrect);
+				//re-asks user same question they got wrong orignally
+				std::cout << "How much is " << randomInt1 << " - " << randomInt2 << "?" << std::endl << "New answer : ";
+				std::cin >> answer;
+				//if user inputs correct answer, set isCorrect to true and get new output response reflecting a correct answer
+				if (answer == correctAnswer) {
+					isCorrect = true;
+					getResponse(isCorrect);
+				}
+
+			}
+			//set correctAnswer to 0 in order to allow a new question without correctAnswer holding a previous value
+			correctAnswer = 0;
+			//since user got the answer wrong at one point in current question, decrement numCorrect (defaulted at 10) in order to keep track of user passing or not 
+			numCorrect--;
+		}
+		//if user gets answer right on first try, output a correct response and out an end line
+		else
+		{
+			getResponse(isCorrect);
+			std::cout << std::endl;
+		}
+		//set correct answer back to 0
+		correctAnswer = 0;
+		break;
+
+
+		//case 3: multiplication
+	case 3:
+
+		//asks user an multiplication question
+		std::cout << "How much is " << randomInt1 << " * " << randomInt2 << "?" << std::endl;
+
+		//correct answer is calculated for user comparison
+		correctAnswer = randomInt1 * randomInt2;
+
+		//looks for user input
+		std::cout << "Answer: ";
+		std::cin >> answer;
+
+		//conditional if statement to check if user input is the correct answer
+		if (answer != correctAnswer) {
+			//while the user continues to input wrong answer, loop through
+			while (answer != correctAnswer) {
+				//set isCorrect to false in order to get an incorrect response from getResponse
+				isCorrect = false;
+				getResponse(isCorrect);
+				//re-asks user same question they got wrong orignally
+				std::cout << "How much is " << randomInt1 << " * " << randomInt2 << "?" << std::endl << "New answer : ";
+				std::cin >> answer;
+				//if user inputs correct answer, set isCorrect to true and get new output response reflecting a correct answer
+				if (answer == correctAnswer) {
+					isCorrect = true;
+					getResponse(isCorrect);
+				}
+
+			}
+			//set correctAnswer to 0 in order to allow a new question without correctAnswer holding a previous value
+			correctAnswer = 0;
+			//since user got the answer wrong at one point in current question, decrement numCorrect (defaulted at 10) in order to keep track of user passing or not 
+			numCorrect--;
+		}
+		//if user gets answer right on first try, output a correct response and out an end line
+		else
+		{
+			getResponse(isCorrect);
+			std::cout << std::endl;
+		}
+		//set correct answer back to 0
+		correctAnswer = 0;
+		break;
+		//case 4: division
+	case 4:
+
+		//asks user an division question
+		std::cout << "How much is " << randomInt1 << " / " << randomInt2 << "?" << std::endl;
+
+		//correct answer is calculated for user comparison
+		correctAnswer = randomInt1 / randomInt2;
+
+		//looks for user input
+		std::cout << "Answer: ";
+		std::cin >> answer;
+
+		//conditional if statement to check if user input is the correct answer
+		if (answer != correctAnswer) {
+			//while the user continues to input wrong answer, loop through
+			while (answer != correctAnswer) {
+				//set isCorrect to false in order to get an incorrect response from getResponse
+				isCorrect = false;
+				getResponse(isCorrect);
+				//re-asks user same question they got wrong orignally
+				std::cout << "How much is " << randomInt1 << " / " << randomInt2 << "?" << std::endl << "New answer : ";
+				std::cin >> answer;
+				//if user inputs correct answer, set isCorrect to true and get new output response reflecting a correct answer
+				if (answer == correctAnswer) {
+					isCorrect = true;
+					getResponse(isCorrect);
+				}
+
+			}
+			//set correctAnswer to 0 in order to allow a new question without correctAnswer holding a previous value
+			correctAnswer = 0;
+			//since user got the answer wrong at one point in current question, decrement numCorrect (defaulted at 10) in order to keep track of user passing or not 
+			numCorrect--;
+		}
+		//if user gets answer right on first try, output a correct response and out an end line
+		else
+		{
+			getResponse(isCorrect);
+			std::cout << std::endl;
+		}
+		//set correct answer back to 0
+		correctAnswer = 0;
+		break;
 	}
 }

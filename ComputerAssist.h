@@ -25,15 +25,23 @@ public:
 	void getResponse(bool answerParam);
 	//sets benchmark to check if user answered 75% or more questions correctly
 	void getBenchmark(int correctParam);
-
+	//combines all five possible inputs using a switch statement to output a question
+	void questionInput(int, int, int);
 
 private:
+	//default difficutly (one digit)
 	int difficulty{ 1 };
+	//default question type (addition)
 	int type{ 1 };
+	//default user-input answer
 	int answer{ 0 };
-	int correctAnswer{ 10 };
+	//default correct answer
+	int correctAnswer{ 0 };
+	//default status of user input correct answer
 	bool isCorrect{ true };
-	int numCorrect{ 0 };
+	//default counter for correct answers, decrements if answer is wrong
+	int numCorrect{ 10 };
+	//default response to an answer, used in a switch statement
 	int responseNum{ 1 };
 };
 
