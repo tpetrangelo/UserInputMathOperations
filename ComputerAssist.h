@@ -30,8 +30,7 @@ public:
 	void getBenchmark(int correctParam);
 	//combines all five possible inputs using a switch statement to output a question
 	void questionInput(int randomInt1, int randomInt2, int type);
-	//validates user input
-	void validateData(int input);
+
 
 
 private:

@@ -356,8 +356,3 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 		break;
 	}
 }
-
-void ComputerAssist::validateData(int input)
-{
-
-}
