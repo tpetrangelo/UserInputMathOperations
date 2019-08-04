@@ -7,6 +7,9 @@ Pages 281-2
 
 #pragma once
 #include <iostream>
+#include <ctime>
+
+
 class ComputerAssist
 {
 public:
@@ -26,7 +29,10 @@ public:
 	//sets benchmark to check if user answered 75% or more questions correctly
 	void getBenchmark(int correctParam);
 	//combines all five possible inputs using a switch statement to output a question
-	void questionInput(int, int, int);
+	void questionInput(int randomInt1, int randomInt2, int type);
+	//validates user input
+	void validateData(int input);
+
 
 private:
 	//default difficutly (one digit)

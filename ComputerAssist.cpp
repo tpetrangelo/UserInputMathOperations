@@ -5,8 +5,9 @@ Homework #4 - Computer Assisted Instructed
 Pages 281-2
 */
 #include "ComputerAssist.h"
-#include <ctime>
- 
+
+
+
 //default constructor for ComputerAssist object
 ComputerAssist::ComputerAssist()
 {
@@ -49,8 +50,8 @@ int ComputerAssist::askQuestion(int type, int difficulty)
 	for (int i = 0; i < 10; i++) {
 		srand(time(NULL));
 		//creates two random numbers bounded by difficutly ex: difficulty of 2 bounds possible numbers from 10 to 99
-		int randomNumber1{ rand() % (int)pow(10,difficulty) + (int)pow(10,difficulty - 1) };
-		int randomNumber2{ rand() % (int)pow(10,difficulty) + (int)pow(10,difficulty - 1) };
+		int randomNumber1{ rand() % (int)pow(10,difficulty) - 1 + (int)pow(10,difficulty - 1) };
+		int randomNumber2{ rand() % (int)pow(10,difficulty) - 1 + (int)pow(10,difficulty - 1) };
 		//creates a random operator in the case that the user inputs 5 for type "combination of all four operators"
 		int randOperator = (rand() % 4 + 1);
 		
@@ -61,15 +62,14 @@ int ComputerAssist::askQuestion(int type, int difficulty)
 			askQuestion(type, difficulty);
 		}
 
-		//sends randomNumber1,2 and type to questionInput where math question will be asked
-		questionInput(randomNumber1, randomNumber2,type);
-		
-		//if type equals five, randOperator will take place of type to vary the operator that will be asked in next question
+		//if type equals five, randOperator will take place of type to vary the operator that will be asked in next question, otherwise user-input type will be used
 		if (type == 5) {
 			questionInput(randomNumber1, randomNumber2, randOperator);
 		}
-
-
+		else
+		{
+			questionInput(randomNumber1, randomNumber2, type);
+		}
 	}
 		//passes numCorrect to getBenchmark to check if user got eight or more questions correctly.
 		getBenchmark(numCorrect);
@@ -160,6 +160,17 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 		//looks for user input
 		std::cout << "Answer: ";
 		std::cin >> answer;
+		std::cout << std::endl;
+
+		//data type validation
+		while (!std::cin) {
+			std::cout << "Invalid data type, please enter an integer answer: ";
+			//repair the instream
+			std::cin.clear();
+			//clear the buffer
+			std::cin.ignore();
+			std::cin >> answer;
+		}
 
 		//conditional if statement to check if user input is the correct answer
 		if (answer != correctAnswer) {
@@ -167,13 +178,29 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 			while (answer != correctAnswer) {
 				//set isCorrect to false in order to get an incorrect response from getResponse
 				isCorrect = false;
+				std::cout << std::endl;
 				getResponse(isCorrect);
 				//re-asks user same question they got wrong orignally
 				std::cout << "How much is " << randomInt1 << " + " << randomInt2 << "?" << std::endl << "New answer : ";
 				std::cin >> answer;
+				std::cout << std::endl;
+
+				
+				//data type validation
+				while (!std::cin) {
+					std::cout << "Invalid data type, please enter an integer answer: ";
+					//repair the instream
+					std::cin.clear();
+					//clear the buffer
+					std::cin.ignore();
+					std::cin >> answer;
+					std::cout << std::endl;
+
+				}
 				//if user inputs correct answer, set isCorrect to true and get new output response reflecting a correct answer
 				if (answer == correctAnswer) {
 					isCorrect = true;
+					std::cout << std::endl;
 					getResponse(isCorrect);
 				}
 
@@ -328,4 +355,9 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 		correctAnswer = 0;
 		break;
 	}
+}
+
+void ComputerAssist::validateData(int input)
+{
+
 }
