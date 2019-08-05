@@ -48,8 +48,10 @@ int ComputerAssist::askQuestion(int type, int difficulty)
 	for (int i = 0; i < 10; i++) {
 		srand(time(NULL));
 		//creates two random numbers bounded by difficutly ex: difficulty of 2 bounds possible numbers from 10 to 99
-		int randomNumber1{ rand() % (int)pow(10,difficulty) - 1 + (int)pow(10,difficulty - 1) };
-		int randomNumber2{ rand() % (int)pow(10,difficulty) - 1 + (int)pow(10,difficulty - 1) };
+		int randomNumber1{ rand() % ((int)pow(10,difficulty) - 1 + 1 - (int)pow(10,difficulty - 1)) + (int)pow(10,difficulty - 1) };
+		int randomNumber2{ rand() % ((int)pow(10,difficulty) - 1 + 1 - (int)pow(10,difficulty - 1)) + (int)pow(10,difficulty - 1) }; 
+		
+		//{ rand() % (int)pow(10,difficulty) - 1 + (int)pow(10,difficulty - 1) };
 		//creates a random operator in the case that the user inputs 5 for type "combination of all four operators"
 		int randOperator = (rand() % 4 + 1);
 		
@@ -224,12 +226,21 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 		//case 2: subtraction
 	case 2:
 
-		//asks user an subtraction question
-		std::cout << "How much is " << randomInt1 << " - " << randomInt2 << "?" << std::endl;
 
 		//correct answer is calculated for user comparison
 		correctAnswer = randomInt1 - randomInt2;
 
+		//if correctAnswer is negative, change randomInt1 & randomInt2 until the answer is positive or 0
+		while (correctAnswer < 0) {
+			randomInt1 = { rand() % ((int)pow(10,difficulty) - 1 + 1 - (int)pow(10,difficulty - 1)) + (int)pow(10,difficulty - 1) };
+			randomInt2 = { rand() % ((int)pow(10,difficulty) - 1 + 1 - (int)pow(10,difficulty - 1)) + (int)pow(10,difficulty - 1) };
+			correctAnswer = randomInt1 - randomInt2;
+		}
+
+		//asks user an subtraction question
+		std::cout << "How much is " << randomInt1 << " - " << randomInt2 << "?" << std::endl;
+
+	
 		//looks for user input
 		std::cout << "Answer: ";
 		std::cin >> answer;
@@ -375,17 +386,24 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 
 		//case 4: division
 	case 4:
+
 		//to avoid dividing by 0, randomInt2 will be re-initialized as a non-zero number
 		while (randomInt2 == 0) {
-			randomInt2 = rand() % (int)pow(10, difficulty) - 1 + (int)pow(10, difficulty - 1);
+			randomInt2 = { rand() % ((int)pow(10,difficulty) - 1 + 1 - (int)pow(10,difficulty - 1)) + (int)pow(10,difficulty - 1) };
 		}
 
-
-		//asks user an division question
-		std::cout << "How much is " << randomInt1 << " / " << randomInt2 << "?" << std::endl;
+		//used to ensure division will be even without any remainders
+		while (randomInt1 % randomInt2 != 0) {
+			randomInt1 = { rand() % ((int)pow(10,difficulty) - 1 + 1 - (int)pow(10,difficulty - 1)) + (int)pow(10,difficulty - 1) };
+			randomInt2 = { rand() % ((int)pow(10,difficulty) - 1 + 1 - (int)pow(10,difficulty - 1)) + (int)pow(10,difficulty - 1) };
+			correctAnswer = randomInt1 / randomInt2;
+		}
 
 		//correct answer is calculated for user comparison
 		correctAnswer = randomInt1 / randomInt2;
+
+		//asks user an division question
+		std::cout << "How much is " << randomInt1 << " / " << randomInt2 << "?" << std::endl;
 
 		//looks for user input
 		std::cout << "Answer: ";
