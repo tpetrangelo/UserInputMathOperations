@@ -11,6 +11,7 @@ int main()
 	//initialize type and difficulty
 	int type{ 0 };
 	int difficulty{ 0 };
+
 	//initialization of ComputerAssist object
 	ComputerAssist student1;
 	

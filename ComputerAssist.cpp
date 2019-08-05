@@ -6,8 +6,6 @@ Pages 281-2
 */
 #include "ComputerAssist.h"
 
-
-
 //default constructor for ComputerAssist object
 ComputerAssist::ComputerAssist()
 {
