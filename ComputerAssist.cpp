@@ -84,7 +84,7 @@ void ComputerAssist::getResponse(bool isCorrectParam)
 	srand(time(NULL));
 	responseNum = { 1 + rand() % 4 };
 	
-	//outputs for incorrect answers based on responseNum, a random integer between one and four
+	//outputs for correct answers based on responseNum, a random integer between one and four
 	if (isCorrectParam == true) {
 
 		switch (responseNum)
