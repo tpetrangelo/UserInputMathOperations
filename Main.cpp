@@ -16,7 +16,7 @@ int main()
 	ComputerAssist student1;
 	
 	//ask user for type of question
-	std::cout << "Hello, please enter a problem type:" << std::endl << "1: Addition 2: Subtraction" << std::endl;;
+	std::cout << "Hello, please enter a problem type" << std::endl << "1: Addition 2: Subtraction" << std::endl;;
 	std::cout << "3: Multiplication 4: Division" << std::endl << "5: All four types" << std::endl;
 	std::cout << "Enter type: ";
 	std::cin >> type;
