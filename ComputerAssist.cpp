@@ -1,9 +1,10 @@
 /*
 Tom Petrangelo
-CIS 554 2019-0703 - Object Oriented Programming
+CIS 554-70618 - Object Oriented Programming
 Homework #4 - Computer Assisted Instructed
 Pages 281-2
 */
+
 #include "ComputerAssist.h"
 
 //default constructor for ComputerAssist object
