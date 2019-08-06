@@ -48,6 +48,7 @@ int ComputerAssist::askQuestion(int type, int difficulty)
 {
 	for (int i = 0; i < 10; i++) {
 		srand(time(NULL));
+
 		//creates two random numbers bounded by difficutly ex: difficulty of 2 bounds possible numbers from 10 to 99
 		int randomNumber1{ rand() % ((int)pow(10,difficulty) - 1 + 1 - (int)pow(10,difficulty - 1)) + (int)pow(10,difficulty - 1) };
 		int randomNumber2{ rand() % ((int)pow(10,difficulty) - 1 + 1 - (int)pow(10,difficulty - 1)) + (int)pow(10,difficulty - 1) }; 
@@ -107,6 +108,7 @@ void ComputerAssist::getResponse(bool isCorrectParam)
 			break;
 		}
 	}
+
 	//outputs for incorrect answers based on responseNum, a random integer between one and four
 	else {
 
@@ -149,6 +151,7 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 	//switch statment based on op (operator)
 	switch (op)
 	{
+
 	//case 1: addition
 	case 1:
 
@@ -166,8 +169,10 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 		while (!std::cin) {
 			std::cout << std::endl;
 			std::cout << "Invalid data type, please enter an integer answer: ";
+			
 			//repair the instream
 			std::cin.clear();
+			
 			//clear the buffer
 			std::cin.ignore();
 			std::cin >> answer;
@@ -176,12 +181,15 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 
 		//conditional if statement to check if user input is the correct answer
 		if (answer != correctAnswer) {
+			
 			//while the user continues to input wrong answer, loop through
 			while (answer != correctAnswer) {
+				
 				//set isCorrect to false in order to get an incorrect response from getResponse
 				isCorrect = false;
 				std::cout << std::endl;
 				getResponse(isCorrect);
+				
 				//re-asks user same question they got wrong orignally
 				std::cout << "How much is " << randomInt1 << " + " << randomInt2 << "?" << std::endl << "New answer : ";
 				std::cin >> answer;
@@ -190,14 +198,17 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 				//data type validation
 				while (!std::cin) {
 					std::cout << "Invalid data type, please enter an integer answer: ";
+					
 					//repair the instream
 					std::cin.clear();
+					
 					//clear the buffer
 					std::cin.ignore();
 					std::cin >> answer;
 					std::cout << std::endl;
 
 				}
+				
 				//if user inputs correct answer, set isCorrect to true and get new output response reflecting a correct answer
 				if (answer == correctAnswer) {
 					isCorrect = true;
@@ -208,11 +219,14 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 				}
 
 			}
+			
 			//set correctAnswer to 0 in order to allow a new question without correctAnswer holding a previous value
 			correctAnswer = 0;
+			
 			//since user got the answer wrong at one point in current question, decrement numCorrect (defaulted at 10) in order to keep track of user passing or not 
 			numCorrect--;
 		}
+		
 		//if user gets answer right on first try, output a correct response and out an end line
 		else
 		{
@@ -220,6 +234,7 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 			getResponse(isCorrect);
 			std::cout << std::endl;
 		}
+		
 		//set correct answer back to 0
 		correctAnswer = 0;
 		break;
@@ -250,8 +265,10 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 		while (!std::cin) {
 			std::cout << std::endl;
 			std::cout << "Invalid data type, please enter an integer answer: ";
+			
 			//repair the instream
 			std::cin.clear();
+		
 			//clear the buffer
 			std::cin.ignore();
 			std::cin >> answer;
@@ -260,12 +277,15 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 
 		//conditional if statement to check if user input is the correct answer
 		if (answer != correctAnswer) {
+			
 			//while the user continues to input wrong answer, loop through
 			while (answer != correctAnswer) {
+			
 				//set isCorrect to false in order to get an incorrect response from getResponse
 				isCorrect = false;
 				std::cout << std::endl;
 				getResponse(isCorrect);
+			
 				//re-asks user same question they got wrong orignally
 				std::cout << "How much is " << randomInt1 << " - " << randomInt2 << "?" << std::endl << "New answer : ";
 				std::cin >> answer;
@@ -274,14 +294,17 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 				//data type validation
 				while (!std::cin) {
 					std::cout << "Invalid data type, please enter an integer answer: ";
+					
 					//repair the instream
 					std::cin.clear();
+				
 					//clear the buffer
 					std::cin.ignore();
 					std::cin >> answer;
 					std::cout << std::endl;
 
 				}
+				
 				//if user inputs correct answer, set isCorrect to true and get new output response reflecting a correct answer
 				if (answer == correctAnswer) {
 					isCorrect = true;
@@ -294,6 +317,7 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 			}
 			//set correctAnswer to 0 in order to allow a new question without correctAnswer holding a previous value
 			correctAnswer = 0;
+			
 			//since user got the answer wrong at one point in current question, decrement numCorrect (defaulted at 10) in order to keep track of user passing or not 
 			numCorrect--;
 		}
@@ -304,6 +328,7 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 			getResponse(isCorrect);
 			std::cout << std::endl;
 		}
+		
 		//set correct answer back to 0
 		correctAnswer = 0;
 		break;
@@ -325,8 +350,10 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 		while (!std::cin) {
 			std::cout << std::endl;
 			std::cout << "Invalid data type, please enter an integer answer: ";
+			
 			//repair the instream
 			std::cin.clear();
+			
 			//clear the buffer
 			std::cin.ignore();
 			std::cin >> answer;
@@ -335,12 +362,15 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 
 		//conditional if statement to check if user input is the correct answer
 		if (answer != correctAnswer) {
+			
 			//while the user continues to input wrong answer, loop through
 			while (answer != correctAnswer) {
+				
 				//set isCorrect to false in order to get an incorrect response from getResponse
 				isCorrect = false;
 				std::cout << std::endl;
 				getResponse(isCorrect);
+				
 				//re-asks user same question they got wrong orignally
 				std::cout << "How much is " << randomInt1 << " * " << randomInt2 << "?" << std::endl << "New answer : ";
 				std::cin >> answer;
@@ -349,14 +379,17 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 				//data type validation
 				while (!std::cin) {
 					std::cout << "Invalid data type, please enter an integer answer: ";
+				
 					//repair the instream
 					std::cin.clear();
+				
 					//clear the buffer
 					std::cin.ignore();
 					std::cin >> answer;
 					std::cout << std::endl;
 
 				}
+				
 				//if user inputs correct answer, set isCorrect to true and get new output response reflecting a correct answer
 				if (answer == correctAnswer) {
 					isCorrect = true;
@@ -369,6 +402,7 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 			}
 			//set correctAnswer to 0 in order to allow a new question without correctAnswer holding a previous value
 			correctAnswer = 0;
+		
 			//since user got the answer wrong at one point in current question, decrement numCorrect (defaulted at 10) in order to keep track of user passing or not 
 			numCorrect--;
 		}
@@ -379,6 +413,7 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 			getResponse(isCorrect);
 			std::cout << std::endl;
 		}
+		
 		//set correct answer back to 0
 		correctAnswer = 0;
 		break;
@@ -414,8 +449,10 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 		while (!std::cin) {
 			std::cout << std::endl;
 			std::cout << "Invalid data type, please enter an integer answer: ";
+		
 			//repair the instream
 			std::cin.clear();
+		
 			//clear the buffer
 			std::cin.ignore();
 			std::cin >> answer;
@@ -424,12 +461,15 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 
 		//conditional if statement to check if user input is the correct answer
 		if (answer != correctAnswer) {
+		
 			//while the user continues to input wrong answer, loop through
 			while (answer != correctAnswer) {
+			
 				//set isCorrect to false in order to get an incorrect response from getResponse
 				isCorrect = false;
 				std::cout << std::endl;
 				getResponse(isCorrect);
+			
 				//re-asks user same question they got wrong orignally
 				std::cout << "How much is " << randomInt1 << " / " << randomInt2 << "?" << std::endl << "New answer : ";
 				std::cin >> answer;
@@ -438,14 +478,17 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 				//data type validation
 				while (!std::cin) {
 					std::cout << "Invalid data type, please enter an integer answer: ";
+				
 					//repair the instream
 					std::cin.clear();
+				
 					//clear the buffer
 					std::cin.ignore();
 					std::cin >> answer;
 					std::cout << std::endl;
 
 				}
+			
 				//if user inputs correct answer, set isCorrect to true and get new output response reflecting a correct answer
 				if (answer == correctAnswer) {
 					isCorrect = true;
@@ -458,6 +501,7 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 			}
 			//set correctAnswer to 0 in order to allow a new question without correctAnswer holding a previous value
 			correctAnswer = 0;
+			
 			//since user got the answer wrong at one point in current question, decrement numCorrect (defaulted at 10) in order to keep track of user passing or not 
 			numCorrect--;
 		}
@@ -468,6 +512,7 @@ void ComputerAssist::questionInput(int randomInt1, int randomInt2, int op)
 			getResponse(isCorrect);
 			std::cout << std::endl;
 		}
+		
 		//set correct answer back to 0
 		correctAnswer = 0;
 		break;

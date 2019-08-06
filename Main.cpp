@@ -33,21 +33,28 @@ int main()
 	}
 	//sets instruction type for student1 based on user input
 	student1.setInstructionType(type);
+
 	//asks user for difficulty of question, input determines number of digits in question
 	std::cout << "Please now enter a difficutly, input decides number of digits in problem: ";
+
 	//sets the difficulty for student1 based on user input
 	std::cin >> difficulty;
 	
 	//Integer validation for difficutly
 	while (!std::cin) {
 		std::cout << "Invalid data type, please enter an integer: ";
+		
 		//repair the instream
 		std::cin.clear();
+		
 		//clear the buffer
 		std::cin.ignore();
 		std::cin >> type;
 	}
+
+	//sets the difficulty for student1 based on user input
 	student1.setDifficulty(difficulty);
+	
 	//combines type and difficulty and passes these two arguments to askQuestion, which initiates the math questions
 	student1.askQuestion(type, difficulty);
 	return 0;
